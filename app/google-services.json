@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "451931572363",
+    "firebase_url": "https://mraema-dbdec-default-rtdb.firebaseio.com",
+    "project_id": "mraema-dbdec",
+    "storage_bucket": "mraema-dbdec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451931572363:android:dd32a012867b085da06c8e",
+        "android_client_info": {
+          "package_name": "com.example.mraema"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451931572363-skg6isampm970mdg262vnpfrairaangg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiCAyMVMbi0Tk06bU6MuvooIX6N0OpTwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451931572363-skg6isampm970mdg262vnpfrairaangg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
