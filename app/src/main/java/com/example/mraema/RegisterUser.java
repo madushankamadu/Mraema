@@ -1,11 +1,14 @@
 package com.example.mraema;
 
+import static com.example.mraema.MapFragment.pharmacyLocation;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +33,7 @@ import java.util.HashMap;
 
 public class RegisterUser extends AppCompatActivity {
 
+    private static final String TAG = "nadun";
     private EditText user_email, user_name, user_contact, user_id, user_pass, user_conf_pass, pharmacy_name, pharmacy_reg_code, pharmacy_district, pharmacy_email, pharmacy_number;
     private RadioButton rd_type;
     private Button pharmacy_request, user_register, choose_location;
@@ -45,6 +49,8 @@ public class RegisterUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+
+        Fragment fragment = new MapFragment();
 
 
 
@@ -183,6 +189,11 @@ public class RegisterUser extends AppCompatActivity {
 
 
 
+
+
+
+
+
                 if (ph_name.isEmpty()){
                     pharmacy_name.setError("Required");
                     return;
@@ -211,15 +222,24 @@ public class RegisterUser extends AppCompatActivity {
                 else if (ph_code.isEmpty()){
                     pharmacy_reg_code.setError("Required");
                     return;
-                }else {
+                }else if(pharmacyLocation == null) {
+                    choose_location.setError("required");
+                    return;
+                }else{
 
-                    String subject = "" + ph_name + "wants to connect with MRAEMA";
-                    String message = "name of the pharmacy - " + ph_name + "\n" + "Register number - " + ph_code + "\n" + "District - " + ph_district + "\n" + "Pharmacy type - " + type + "\n" + "Email Address - " + ph_email + "\n" + "Contact Number" + ph_contact + "\n";
 
-                    JavaMailApi javaMailApi = new JavaMailApi(RegisterUser.this, "madushankaforgit@gmail.com", subject, message);
-                    javaMailApi.execute();
+
+                        String subject = "" + ph_name + " wants to connect with MRAEMA as a pharmacy";
+                        String message = "name of the pharmacy - " + ph_name + "\n" + "Register number - " + ph_code + "\n" + "District - " + ph_district + "\n" + "Pharmacy type - " + type + "\n" + "Email Address - " + ph_email + "\n" + "Contact Number" + ph_contact + "\n"+ "location- longitude"+pharmacyLocation.longitude+ "location- latitude"+pharmacyLocation.latitude;
+
+                        Log.d(TAG, "onClick: "+subject+"\n"+message);
+
+                        JavaMailApi javaMailApi = new JavaMailApi(RegisterUser.this, "mraemasender@gmail.com", subject, message);
+                        javaMailApi.execute();
+
+                    }
                 }
-            }
+
         });
 
         choose_location.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +247,6 @@ public class RegisterUser extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                Fragment fragment = new MapFragment();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
             }

@@ -2,6 +2,7 @@ package com.example.mraema;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Toast;
@@ -46,11 +47,19 @@ public class JavaMailApi extends AsyncTask<Void , Void , Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         //Dismiss progress dialog when message successfully send
-        mProgressDialog.dismiss();
+        if (mProgressDialog != null && mProgressDialog.isShowing()){
+            mProgressDialog.dismiss();
+
+        }
 
         //Show success toast
         Toast.makeText(mContext,"Request Sent", Toast.LENGTH_SHORT).show();
+
+        mContext.startActivity(new Intent(mContext, LoginUser.class));
+
     }
+
+
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -114,4 +123,6 @@ public class JavaMailApi extends AsyncTask<Void , Void , Void> {
         }
         return null;
     }
+
+
 }

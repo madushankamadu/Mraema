@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_LOCATION = 99;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private void SLocation() {
         LocationRequest request = LocationRequest.create();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        request.setInterval(5000);
+        request.setInterval(4000);
         request.setFastestInterval(2000);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         result.addOnCompleteListener(task -> {
             try {
                 LocationSettingsResponse response = task.getResult(ApiException.class);
+
+
 
                 startActivity(new Intent(MainActivity.this, LoginUser.class));
 
