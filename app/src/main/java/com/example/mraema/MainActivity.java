@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Button  reminder = findViewById(R.id.btn_reminder);
+
         Button pharmacy_btn = findViewById(R.id.btn_pharmacy);
 
         getLocation();
@@ -55,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        reminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,UserHome.class));
+            }
+        });
+
     }
 
     private void SLocation() {

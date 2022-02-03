@@ -173,6 +173,8 @@ public class MapFragment extends Fragment {
                         googleMap.addMarker(markerOptions);
 
 
+
+
                         updateDataBase(markerOptions);
                     }
                 });

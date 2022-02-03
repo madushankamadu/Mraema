@@ -64,7 +64,7 @@
                  android:src="@drawable/pharmacy_back"/>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/imageView2"

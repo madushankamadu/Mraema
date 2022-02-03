@@ -268,6 +268,8 @@ public class RegisterUser extends AppCompatActivity {
             }
         });
     }
+
+
 // UPDATING THE DATABASE FOR USER ACCOUNT
     private void updateuDb(FirebaseUser user, String email) {
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_view"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp"
+    android:textSize="16dp"
+    android:textStyle="bold"
+    android:layout_margin="5dp"
+    android:background="@drawable/round_outline"
+    app:cardBackgroundColor="#B0FFFFFF"
+    android:clickable="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/pharmacyLogo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_cart"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/pharmacyLogo"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:text="pharmacy name"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/pharmacyTown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/pharmacyLogo"
+            android:text="Town"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/distanceToMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="5km"
+            android:textColor="@color/quantum_googgreen" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
