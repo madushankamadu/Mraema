@@ -1,10 +1,9 @@
-package com.example.mraema;
+package com.example.mraema.authantication;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.Properties;
@@ -73,7 +72,7 @@ public class JavaMailApi extends AsyncTask<Void , Void , Void> {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
-
+//465
         //Creating a new session
         mSession = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {

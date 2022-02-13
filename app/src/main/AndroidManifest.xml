@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mraema">
         <activity
+            android:name=".cart.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pharmacy.PharmacyHome"
+            android:exported="false" />
+        <activity
             android:name=".UserHome"
             android:exported="false" />
 
@@ -22,10 +28,10 @@
             android:value="AIzaSyD-2Ul4NhziPCw_oT_nhrwuHGpioU_KzTM" />
 
         <activity
-            android:name=".RegisterUser"
+            android:name=".authantication.RegisterUser"
             android:exported="false" />
         <activity
-            android:name=".LoginUser"
+            android:name=".authantication.LoginUser"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

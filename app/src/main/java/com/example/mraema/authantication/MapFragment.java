@@ -1,4 +1,4 @@
-package com.example.mraema;
+package com.example.mraema.authantication;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mraema.R;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;

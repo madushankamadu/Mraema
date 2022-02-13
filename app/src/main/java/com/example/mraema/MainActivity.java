@@ -1,5 +1,6 @@
 package com.example.mraema;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -7,15 +8,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.mraema.authantication.LoginUser;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
@@ -23,14 +23,20 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
 
     private static final int REQUEST_LOCATION = 99;
+    private Button pharmacy_btn,reminder;
 
 
     @Override
@@ -39,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button  reminder = findViewById(R.id.btn_reminder);
+        reminder = findViewById(R.id.btn_reminder);
 
-        Button pharmacy_btn = findViewById(R.id.btn_pharmacy);
+        pharmacy_btn = findViewById(R.id.btn_pharmacy);
 
         getLocation();
 
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     SLocation();
+                    FirebaseAuth.getInstance().addAuthStateListener(MainActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -84,9 +91,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 LocationSettingsResponse response = task.getResult(ApiException.class);
 
-
-
-                startActivity(new Intent(MainActivity.this, LoginUser.class));
+                //here login has plased
 
             } catch (ApiException e) {
                 switch (e.getStatusCode()) {
@@ -126,5 +131,39 @@ public class MainActivity extends AppCompatActivity {
                 .check();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseAuth.getInstance().removeAuthStateListener(MainActivity.this);
+    }
 
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+        if (firebaseAuth.getCurrentUser()==null){
+            Intent intent = new Intent(MainActivity.this, LoginUser.class);
+            startActivity(intent);
+            return;
+        }else {
+            FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
+            reference.child(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child("UserType").getValue() != null){
+                        Intent i = new Intent(MainActivity.this, UserHome.class);
+                        startActivity(i);
+                        finish();
+                    }else if(dataSnapshot.child("UserType").getValue() == null){
+                        //  Intent i = new Intent(LoginUser.this, .class);
+                        //  startActivity(i);
+                        //  finish();
+
+                    }
+
+                }
+            });
+        }
+
+    }
 }

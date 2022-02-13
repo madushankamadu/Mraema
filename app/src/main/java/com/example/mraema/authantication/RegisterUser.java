@@ -1,6 +1,6 @@
-package com.example.mraema;
+package com.example.mraema.authantication;
 
-import static com.example.mraema.MapFragment.pharmacyLocation;
+import static com.example.mraema.authantication.MapFragment.pharmacyLocation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.location.FusedLocationProviderClient;
+import com.example.mraema.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -234,7 +234,7 @@ public class RegisterUser extends AppCompatActivity {
 
                         Log.d(TAG, "onClick: "+subject+"\n"+message);
 
-                        JavaMailApi javaMailApi = new JavaMailApi(RegisterUser.this, "mraemasender@gmail.com", subject, message);
+                        JavaMailApi javaMailApi = new JavaMailApi(RegisterUser.this, "mraemareciever@gmail.com", subject, message);
                         javaMailApi.execute();
 
                     }

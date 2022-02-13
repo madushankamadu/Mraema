@@ -1,4 +1,4 @@
-package com.example.mraema;
+package com.example.mraema.authantication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,19 +6,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mraema.R;
+import com.example.mraema.UserHome;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginUser extends AppCompatActivity {
 
+    private static final String TAG = "loged";
     private EditText et_email, et_password;
     private Button btn_login;
     private TextView tv_register, tv_forget_pass, login_pharmacy;
@@ -33,7 +42,6 @@ public class LoginUser extends AppCompatActivity {
         setContentView(R.layout.activity_login_user);
 
         tv_register = findViewById(R.id.tv_register);
-        login_pharmacy =findViewById(R.id.tv_pharmacy_change);
         et_email = findViewById(R.id.et_email_p);
         et_password = findViewById(R.id.et_pwd);
         btn_login = findViewById(R.id.btn_lolgin);
@@ -60,25 +68,7 @@ public class LoginUser extends AppCompatActivity {
             }
         });
 
-        //changing interface from one to another
 
-        login_pharmacy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (normal_user){
-                    btn_login.setText("ඔසුසලක් ලෙස ලියාපදිංචි වන්න.");
-                    login_pharmacy.setText("පරිෂීලකයෙක් ලෙස පිවිසෙන්න.");
-                    normal_user =false;
-                }else if(!normal_user){
-                    btn_login.setText("MRAEMA වෙත පිවිසෙන්න");
-                    login_pharmacy.setText("ඔසුසලක් ලෙස පිවිසෙන්න");
-                    normal_user =true;
-                }
-
-            }
-        });
 
         //code for forgot password
         tv_forget_pass.setOnClickListener(new View.OnClickListener() {
@@ -96,13 +86,15 @@ public class LoginUser extends AppCompatActivity {
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginUser.this,RegisterUser.class));
+                startActivity(new Intent(LoginUser.this, RegisterUser.class));
             }
         });
     }
 
 
-//setting up firebase setting for user authentication
+
+
+    //setting up firebase setting for user authentication
     private void signIn(String email, String password) {
         auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email,password)
@@ -111,17 +103,27 @@ public class LoginUser extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(LoginUser.this, "Login is Successful !", Toast.LENGTH_LONG).show();
-                            if (normal_user){
-                               // Intent i = new Intent(LoginUser.this, HomePage.class);
-                                //startActivity(i);
-                                //finish();
 
-                            }
-                            if (!normal_user){
-                              //  Intent i = new Intent(LoginUser.this, HomePage.class);
-                                //startActivity(i);
-                                //finish();
-                            }
+                            FirebaseUser user = auth.getInstance().getCurrentUser();
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
+                            reference.child(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                @Override
+                                public void onSuccess(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.child("UserType").getValue() != null){
+                                        Log.d(TAG, "onSuccess: "+dataSnapshot.child("UserType").toString());
+                                        Intent i = new Intent(LoginUser.this, UserHome.class);
+                                        startActivity(i);
+                                        finish();
+                                    }else if(dataSnapshot.child("UserType").getValue() == null){
+                                      //  Intent i = new Intent(LoginUser.this, .class);
+                                      //  startActivity(i);
+                                      //  finish();
+                                        Log.d(TAG, "onSuccess: logd as a pharmacy");
+                                    }
+
+                                }
+                            });
+
 
                         }else {
                             Toast.makeText(LoginUser.this, "Login is not Successful !", Toast.LENGTH_LONG).show();

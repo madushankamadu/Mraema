@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/back"
     tools:ignore="SpeakableTextPresentCheck"
-    tools:context=".LoginUser">
+    tools:context=".authantication.LoginUser">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/const_"

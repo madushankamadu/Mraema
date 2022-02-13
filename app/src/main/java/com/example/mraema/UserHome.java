@@ -4,24 +4,29 @@ import static com.example.mraema.distanceSetter.getKmFromLatLong;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mraema.authantication.LoginUser;
+import com.example.mraema.cart.CartActivity;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -34,6 +39,8 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,14 +56,16 @@ import java.util.List;
 
 public class UserHome extends AppCompatActivity {
 
+    private static final String TAG = "itAccessed";
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
     int LOCATION_REQUEST_CODE = 10001;
     private DatabaseReference referance;
     private Location userLoc;
     private RecyclerView recyclerView;
-    private List<Distances> distanceToUser = new ArrayList<>();
+    private List<Apharmacy> distanceToUser = new ArrayList<>();
     private RecyclerAdapter recyclerAdapter;
+    private ProgressBar loading;
 
 
 
@@ -69,6 +78,7 @@ public class UserHome extends AppCompatActivity {
             }
 
             distanceToUser.clear();
+            Log.d(TAG, "onLocationResult: databaseAccessed");
             databaseRef();
         }
     };// end of locationcallback
@@ -85,6 +95,12 @@ public class UserHome extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         recyclerView = findViewById(R.id.list);
+        loading = findViewById(R.id.progresviewer);
+
+       // Bundle user = getIntent().getExtras();
+        FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d(TAG, "onCreate: user is  "  + user1.getUid());
+
 
 
         //Location getting time period.
@@ -102,6 +118,7 @@ public class UserHome extends AppCompatActivity {
 
 // getting data about pharmacies
     private void databaseRef() {
+
         referance = FirebaseDatabase.getInstance().getReference("Pharmacy");
         Query query = FirebaseDatabase.getInstance().getReference("Pharmacy").orderByChild("email");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,6 +128,7 @@ public class UserHome extends AppCompatActivity {
                 fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
+
                         for (DataSnapshot ds : snapshot.getChildren()){
 
                             double lat2  = Double.parseDouble(ds.child("locationLatitude").getValue().toString());
@@ -119,16 +137,18 @@ public class UserHome extends AppCompatActivity {
                             double lat1 = location.getLatitude();
                             double lng1 = location.getLongitude();
 
-                            Distances distances = new Distances();
-                             distances.distance= getKmFromLatLong(lat1,lng1,lat2,lng2);
-                             distances.name = ds.child("PharmacyName").getValue().toString();
-                             distances.town = ds.child("Town").getValue().toString();
+                            Apharmacy apharmacy = new Apharmacy();
+                             apharmacy.distance= getKmFromLatLong(lat1,lng1,lat2,lng2);
+                             apharmacy.name = ds.child("PharmacyName").getValue().toString();
+                             apharmacy.town = ds.child("Town").getValue().toString();
+                             apharmacy.id = ds.child("regNumber").getValue().toString();
 
-                            distanceToUser.add(distances);//
+                            distanceToUser.add(apharmacy);//
                             Collections.sort(distanceToUser);//sort distances
 
                         }
 
+                        //set the adapter for recyclerview
                         setAdapter();
                     }
                 });
@@ -148,6 +168,8 @@ public class UserHome extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+                Toast.makeText(UserHome.this, "something happen wrong..!", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -158,11 +180,10 @@ public class UserHome extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(UserHome.this));
         recyclerView.setAdapter(recyclerAdapter);
 
-    }
-
-    private void setUserInfo() {
+        loading.setVisibility(View.GONE);
 
     }
+
 
 
     @Override
@@ -175,13 +196,34 @@ public class UserHome extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id){
+            case R.id.logout:
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.signOut();
+                Intent intent = new Intent(UserHome.this, LoginUser.class);
+                startActivity(intent);
+
+                break;
+            case R.id.cart:
+                Intent i = new Intent(UserHome.this, CartActivity.class);
+                startActivity(i);
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
         //    getLastLocation();
            // Log.d(TAG, "onStart: started");
             checkSettingsAndStartLocationUpdates();
-            startLocationUpdates();
+
 
         }else {
             askLocationPermission();

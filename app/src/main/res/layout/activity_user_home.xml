@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homePage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserHome"
@@ -22,16 +23,48 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+    <RelativeLayout
+        android:id="@+id/home_interface"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/action_bar"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:paddingTop="10dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingStart="10dp"
+            android:layout_alignParentTop="true"
+            android:text="Pharmacies near to you"
+            android:textColor="#1976D2" />
+
+        <ProgressBar
+            android:id="@+id/progresviewer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/white"
+            android:layout_centerInParent="true"/>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/text"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:paddingTop="10dp" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

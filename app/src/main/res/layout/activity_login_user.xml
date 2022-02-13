@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/back"
     tools:ignore="SpeakableTextPresentCheck"
-    tools:context=".LoginUser">
+    tools:context=".authantication.LoginUser">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/const_"
@@ -105,15 +105,7 @@
                 android:text="ලියාපදිංචි වන්න"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/tv_pharmacy_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_forgot_pwd"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="ඔසුසලක් ලෙස පිවිසෙන්න."
-                android:textSize="20sp" />
+
 
 
         </RelativeLayout>
