@@ -1,4 +1,4 @@
-package com.example.mraema;
+package com.example.mraema.user;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mraema.R;
 import com.example.mraema.selectMedicine.OnePharmacyFragment;
 
 import java.text.DecimalFormat;

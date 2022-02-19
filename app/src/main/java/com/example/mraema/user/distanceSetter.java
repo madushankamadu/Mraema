@@ -1,4 +1,4 @@
-package com.example.mraema;
+package com.example.mraema.user;
 
 
 import android.location.Location;

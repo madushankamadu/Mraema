@@ -14,7 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mraema.R;
-import com.example.mraema.UserHome;
+import com.example.mraema.user.UserHome;
+import com.example.mraema.pharmacy.PharmacyHome;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -115,9 +116,9 @@ public class LoginUser extends AppCompatActivity {
                                         startActivity(i);
                                         finish();
                                     }else if(dataSnapshot.child("UserType").getValue() == null){
-                                      //  Intent i = new Intent(LoginUser.this, .class);
-                                      //  startActivity(i);
-                                      //  finish();
+                                        Intent i = new Intent(LoginUser.this, PharmacyHome.class);
+                                        startActivity(i);
+                                        finish();
                                         Log.d(TAG, "onSuccess: logd as a pharmacy");
                                     }
 

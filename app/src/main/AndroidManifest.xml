@@ -14,13 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mraema">
         <activity
-            android:name=".cart.CartActivity"
-            android:exported="false" />
-        <activity
             android:name=".pharmacy.PharmacyHome"
             android:exported="false" />
         <activity
-            android:name=".UserHome"
+            android:name=".cart.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".user.UserHome"
             android:exported="false" />
 
         <meta-data

@@ -1,6 +1,6 @@
-package com.example.mraema;
+package com.example.mraema.user;
 
-import static com.example.mraema.distanceSetter.getKmFromLatLong;
+import static com.example.mraema.user.distanceSetter.getKmFromLatLong;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mraema.R;
 import com.example.mraema.authantication.LoginUser;
 import com.example.mraema.cart.CartActivity;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -90,6 +91,7 @@ public class UserHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
+        setTitle(R.string.app_home);
 
         mToolbar = findViewById(R.id.user_home_toolbar);
         setSupportActionBar(mToolbar);
@@ -210,6 +212,25 @@ public class UserHome extends AppCompatActivity {
             case R.id.cart:
                 Intent i = new Intent(UserHome.this, CartActivity.class);
                 startActivity(i);
+                break;
+            case R.id.notification:
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .add(R.id.home_interface, NotificationFragment.class, null)
+                        .commit();getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.home_interface, NotificationFragment.class, null)
+                    .commit();
+            break;
+            case R.id.profile:
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .add(R.id.home_interface, ProfileFragment.class, null)
+                        .commit();getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.home_interface, ProfileFragment.class, null)
+                    .commit();
+
         }
 
 

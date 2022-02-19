@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/cart_toolbar"
             android:layout_width="match_parent"
@@ -34,25 +33,26 @@
         android:id="@+id/cartList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/cart_list_item" />
+        android:layout_above="@+id/content"
+        tools:ignore="NotSibling" />
 
 
 </RelativeLayout>
 
     <Button
         android:id="@+id/emptyList"
-        android:layout_width="190dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/order"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="0dp"
         android:text="ඇනවුම හිස් කරන්න." />
 
     <Button
         android:id="@+id/order"
-        android:layout_width="190dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"

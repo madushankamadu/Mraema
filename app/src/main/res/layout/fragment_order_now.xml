@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:windowSoftInputMode="adjustResize"
+    android:background="@drawable/fragment_background"
+    tools:context=".selectMedicine.DirectOderFragment">
+
+    <TextView
+
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="!ඔබේ තුන්ඩුව ඉදිරිපත් කර ඖෂද ඇනවුම් කරන්න.!" />
+
+    <Button
+        android:id="@+id/upload_presc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="තුන්ඩුව උඩුගත කරන්න." />
+
+    <ImageView
+        android:id="@+id/done_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/done"
+        android:layout_below="@+id/upload_presc"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/pending_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/upload_presc"
+        android:layout_centerInParent="true"
+        android:background="@drawable/pending" />
+
+
+    <Button
+        android:id="@+id/orderBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/msg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:text="ඇනවුම් කරන්න." />
+
+    <EditText
+        android:id="@+id/msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/done_icon"
+        android:layout_centerHorizontal="true"
+        android:ems="100"
+        android:hint="අවශ්‍ය නම් වැඩිදුර තොරතුරු මෙහි යොදන්න. "
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textSize="12dp" />
+
+
+</RelativeLayout>

@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.mraema.authantication.LoginUser;
+import com.example.mraema.pharmacy.PharmacyHome;
+import com.example.mraema.user.UserHome;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationRequest;
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,UserHome.class));
+                startActivity(new Intent(MainActivity.this, UserHome.class));
             }
         });
 
@@ -155,9 +157,9 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                         startActivity(i);
                         finish();
                     }else if(dataSnapshot.child("UserType").getValue() == null){
-                        //  Intent i = new Intent(LoginUser.this, .class);
-                        //  startActivity(i);
-                        //  finish();
+                        Intent i = new Intent(MainActivity.this, PharmacyHome.class);
+                        startActivity(i);
+                        finish();
 
                     }
 
