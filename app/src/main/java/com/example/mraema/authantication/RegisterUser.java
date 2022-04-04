@@ -1,5 +1,6 @@
 package com.example.mraema.authantication;
 
+import static com.example.mraema.MainActivity.sinhala;
 import static com.example.mraema.authantication.MapFragment.pharmacyLocation;
 
 import androidx.annotation.NonNull;
@@ -33,15 +34,17 @@ import java.util.HashMap;
 
 public class RegisterUser extends AppCompatActivity {
 
-    private static final String TAG = "nadun";
+    private static final String TAG = "naduncheck";
     private EditText user_email, user_name, user_contact, user_id, user_pass, user_conf_pass, pharmacy_name, pharmacy_reg_code, pharmacy_district, pharmacy_email, pharmacy_number;
     private RadioButton rd_type;
     private Button pharmacy_request, user_register, choose_location;
-    private TextView change_to_user, change_to_pharmacy;
+    private TextView change_to_user, change_to_pharmacy, topicInRegister,pharmacyType;
     private FirebaseAuth auth;
     private RadioGroup radio_group;
+    private RadioButton retail, whol;
     private RelativeLayout pharmacy_type;
     private FrameLayout frame_layout;
+
 
 
 
@@ -51,6 +54,8 @@ public class RegisterUser extends AppCompatActivity {
         setContentView(R.layout.activity_register_user);
 
         Fragment fragment = new MapFragment();
+
+
 
 
 
@@ -77,7 +82,12 @@ public class RegisterUser extends AppCompatActivity {
 
 
         radio_group = findViewById(R.id.rdgroup);
+        pharmacyType = findViewById(R.id.tv_type);
+        retail = findViewById(R.id.radio_ret);
+        whol = findViewById(R.id.radio_whal);
         pharmacy_type = findViewById(R.id.redio_layout);
+        topicInRegister = findViewById(R.id.topic_in_register);
+
 
 
 
@@ -252,6 +262,8 @@ public class RegisterUser extends AppCompatActivity {
             }
         });
 
+        setLanguage();
+
     }// oncreate
 
     //  create an account for user
@@ -296,6 +308,52 @@ public class RegisterUser extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void setLanguage(){
+        if (sinhala == false){
+            pharmacy_name.setHint("Name");
+            pharmacy_email.setHint("Email");
+            pharmacy_district.setHint("District");
+            pharmacy_number.setHint("Phone Number");
+            pharmacy_reg_code.setHint("Reg Code");
+            pharmacy_request.setText("Send Request");
+            change_to_pharmacy.setText("Register as pharmacy");
+            choose_location.setText("Choose Location");
+            topicInRegister.setText("Register for MRAEMA");
+            user_email.setHint("Email");
+            user_name.setHint("Name");
+            user_contact.setHint("Phone Number");
+            user_id.setHint("NIC Number");
+            user_pass.setHint("Password");
+            user_conf_pass.setHint("Confirm Password");
+            user_register.setText("Register");
+            change_to_user.setText("Register as user");
+            pharmacyType.setText("Pharmacy Type");
+            retail.setText("Retail");
+            whol.setText("Wholesale");
+        }else if (sinhala == true){
+            pharmacy_name.setHint("ඔසුසලේ නම");
+            pharmacy_email.setHint("ඊමේල් ලිපිණය");
+            pharmacy_district.setHint("දිස්ත්\u200Dරික්කය");
+            pharmacy_number.setHint("දුරකථන අං");
+            pharmacy_reg_code.setHint("ලියාපදිංචි අංකය");
+            pharmacy_request.setText("ලියාපදිංචි වන්න.");
+            change_to_pharmacy.setText("පරිෂිලකයෙක් ලෙස ලියාපදිංචි වන්න.");
+            choose_location.setText("ස්ථානය තෝරන්න.");
+            topicInRegister.setText("MRAEMA හි ලියාපදිංචි වන්න.");
+            pharmacyType.setText("ඔසුසලේ වර්ගය");
+            retail.setText("තොග   ");
+            whol.setText("සිල්ලර");
+            user_email.setHint("ඊමේල් ලිපිණය");
+            user_name.setHint("පරිෂිලක නම");
+            user_contact.setHint("දුරකථන අං");
+            user_id.setHint("ID අංකය");
+            user_pass.setHint("මුරපදය");
+            user_conf_pass.setHint("මුරපදය නැවත යොදන්න");
+            user_register.setText("ලියාපදිංචි වන්න.");
+            change_to_user.setText("ඔසුසලක් ලෙස ලියාපදිංචි වන්න.");
+        }
     }
 
 }

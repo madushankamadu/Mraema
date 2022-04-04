@@ -43,7 +43,7 @@ import com.google.android.gms.tasks.Task;
 
 public class MapFragment extends Fragment {
 
-    private static final String TAG = "onStart";
+    private static final String TAG = "onStartcheck";
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
     int LOCATION_rEQUEST_CODE = 1001;

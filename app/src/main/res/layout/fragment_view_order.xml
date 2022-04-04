@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".pharmacy.ViewOrderFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fragment_background"
+        >
+
+        <TextView
+            android:id="@+id/main_topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="පාරිබෝගිකයාගේ බෙහෙත් තුන්ඩුව."
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+
+        <ImageView
+            android:id="@+id/prescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/main_topic"
+            android:src="@drawable/pilicon" />
+
+        <RelativeLayout
+            android:id="@+id/item_list_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/prescription"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_above="@+id/totalPrice">
+
+            <ListView
+                android:id="@+id/item_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:paddingTop="10dp"
+                tools:listitem="@layout/ordered_pill_item" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="total price"
+            android:textColor="@color/quantum_googgreen"
+            android:layout_above="@+id/reply_comment"
+            android:layout_centerHorizontal="true"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/accept_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/quantum_googgreen"
+            android:text="Accept order" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reject_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/quantum_googred"
+            android:text="Reject order" />
+
+        <EditText
+            android:id="@+id/reply_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/reject_order"
+            android:layout_marginVertical="20dp"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/scanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:text="Go To Prescription Reader " />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

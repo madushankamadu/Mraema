@@ -16,8 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="pharmacy name"
         android:layout_centerHorizontal="true"
+        android:text="pharmacy name"
         android:textSize="20sp" />
 
     <androidx.appcompat.widget.SearchView
@@ -53,18 +53,17 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/direct_oder"
         android:layout_centerHorizontal="true"
-        android:text="ඉහත ඇති ඖෂද තෝරා ඇනවුම් කරන්න."
-        />
+        android:text="ඉහත ඇති ඖෂද තෝරා ඇනවුම් කරන්න.නැත්නම්" />
 
 
     <Button
-        android:layout_marginTop="10dp"
         android:id="@+id/direct_oder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="තුන්ඩුව හරහා ඇනවුම් කරන්න."
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:text="තුන්ඩුව හරහා ඇනවුම් කරන්න." />
 
 
 

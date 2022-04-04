@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back2"
     tools:context=".pharmacy.PharmacyHome">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -14,7 +15,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/user_home_toolbar"
+            android:id="@+id/pharmacy_home_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize" />
 
@@ -22,16 +23,19 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/content_pharmacy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/action_bar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+
+
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/heading"
@@ -41,9 +45,12 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
+            android:padding="5dp"
+            android:textColor="@color/white"
             android:text="ඔබට ලැබී ඇති ඇනවුම්." />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_order_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/heading" />

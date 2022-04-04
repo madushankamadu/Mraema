@@ -1,5 +1,7 @@
 package com.example.mraema.selectMedicine;
 
+import static com.example.mraema.MainActivity.sinhala;
+
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mraema.R;
@@ -41,6 +44,7 @@ public class DirectOderFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private ImageView doneIcon, pendingIcon;
+    private TextView warning;
 
 
 
@@ -67,6 +71,9 @@ public class DirectOderFragment extends Fragment {
         uploadButton = view.findViewById(R.id.upload_presc);
         doneIcon = view.findViewById(R.id.doneIcon);
         pendingIcon = view.findViewById(R.id.PendingIcon);
+        warning = view.findViewById(R.id.worning);
+        massage = view.findViewById(R.id.msg);
+        oderMedicines = view.findViewById(R.id.make_order);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
@@ -82,6 +89,7 @@ public class DirectOderFragment extends Fragment {
                 choosePicture();
             }
         });
+        setLanguage();
         return view;
     }
 
@@ -128,6 +136,21 @@ public class DirectOderFragment extends Fragment {
     private void choosePicture() {
         mGetContent.launch("image/*");
     }
+
+    private void setLanguage(){
+        if (sinhala == false) {
+            massage.setHint("any comments");
+            warning.setText("Please upload the prescription");
+            uploadButton.setText("Upload prescription");
+            oderMedicines.setText("Order Now");
+        }else if (sinhala == true){
+            massage.setHint("අවශ්\u200Dය නම් වැඩිදුර තොරතුරු මෙහි යොදන්න. ");
+            warning.setText("ඔබේ තුන්ඩුව ඉදිරිපත් කර ඖෂද ඇනවුම් කරන්න!");
+            uploadButton.setText("තුන්ඩුව උඩුගත කරන්න.");
+            oderMedicines.setText("ඇනවුම් කරන්න.");
+        }
+    }
+
 }
 
 //rules_version = '2';

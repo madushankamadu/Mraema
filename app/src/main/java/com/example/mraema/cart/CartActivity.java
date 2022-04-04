@@ -1,5 +1,7 @@
 package com.example.mraema.cart;
 
+import static com.example.mraema.MainActivity.sinhala;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mraema.R;
+import com.example.mraema.selectMedicine.DirectOderFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,15 +44,10 @@ public class CartActivity extends AppCompatActivity {
     ActivityResultLauncher<String> mGetContent;
     private ListView list;
     private FirebaseUser user;
-    private Button OrderCart, orderNowBtn, uploadPresc;
-    private ImageView pending, done;
-    private EditText massage;
-    private AlertDialog.Builder dialogBuilder;
-    private AlertDialog dialog;
+    private Button OrderCart, orderNowBtn;
     private StorageReference storageReference;
-    private Uri imageUri;
     private FirebaseStorage storage;
-    private Button clear;
+    private Button clearing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +61,11 @@ public class CartActivity extends AppCompatActivity {
         list = findViewById(R.id.cartList);
         OrderCart = findViewById(R.id.order);
         itemArrayList  = new ArrayList<>();
-        clear = findViewById(R.id.emptyList);
+        clearing = findViewById(R.id.emptyList);
         orderNowBtn = findViewById(R.id.order);
 
 
+        setLanguage();
 
         ListAdapter listAdapter = new ListAdapter(this,R.layout.cart_list_item,itemArrayList);
         list.setAdapter(listAdapter);
@@ -106,14 +105,35 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("list", (Serializable) itemArrayList);
+
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 OrderNowFragment orderNowFragment = new OrderNowFragment();
                 orderNowFragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.content, orderNowFragment).addToBackStack(null).commit();
-                clear.setVisibility(View.GONE);
+                clearing.setVisibility(View.GONE);
                 orderNowBtn.setVisibility(View.GONE);
 
+               // Bundle bundle = new Bundle();
+
+               // AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                DirectOderFragment directOderFragment = new DirectOderFragment();
+//                directOderFragment.setArguments(bundle);
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.content, directOderFragment).addToBackStack(null).commit();
+
+
+            }
+        });
+
+        clearing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid());
+                db.child("cart").setValue(null);
+                itemArrayList.clear();
+                ListAdapter adapter  = new ListAdapter(CartActivity.this,R.layout.cart_list_item,itemArrayList);
+
+                list.setAdapter(adapter);
             }
         });
 
@@ -136,7 +156,7 @@ public class CartActivity extends AppCompatActivity {
                         items.setPharmacyName(snapshot.child("pharmacyName").getValue().toString());
                         items.setCount(snapshot.child("units").getValue().toString());
                         items.setItemName(snapshot.child("nedicineName").getValue().toString());
-                        items.setPharmacyId(snapshot.child("pharmacyId").getValue().toString());
+                        items.setPharmacyUserId(snapshot.child("pharmacyUserId").getValue().toString());
 
                         itemArrayList.add(items);
 
@@ -196,6 +216,16 @@ public class CartActivity extends AppCompatActivity {
 
     private void choosePicture() {
         mGetContent.launch("image/*");
+    }
+
+    private void setLanguage(){
+        if (sinhala == false){
+            clearing.setText("Empty the cart");
+            orderNowBtn.setText("Order Now");
+        }else if(sinhala != true){
+            clearing.setText("ඇනවුම හිස් කරන්න.");
+            orderNowBtn.setText("අැනවුම් කරන්න.");
+        }
     }
 }
 

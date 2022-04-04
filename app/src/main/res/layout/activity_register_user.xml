@@ -36,7 +36,7 @@
                 android:id="@+id/et_nameP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView4"
+                android:layout_below="@+id/topic_in_register"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:ems="10"
@@ -49,7 +49,7 @@
                 android:id="@+id/emailU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView4"
+                android:layout_below="@+id/topic_in_register"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:ems="10"
@@ -198,8 +198,7 @@
                 android:ems="10"
                 android:hint="මුරපදය"
                 android:inputType="textPassword"
-                android:minHeight="48dp"
-                />
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/confpassU"
@@ -273,11 +272,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:text="ඔසුසලක් ලෙස ලියාපදිංචි වන්න."
-                />
+                android:text="ඔසුසලක් ලෙස ලියාපදිංචි වන්න." />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/topic_in_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

@@ -17,14 +17,14 @@
         android:layout_centerHorizontal="true"
         android:text="name of the medicine"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/hint"
+        app:layout_constraintBottom_toTopOf="@+id/hint_popup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/hint"
+        android:id="@+id/hint_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/medicineName"
@@ -41,13 +41,13 @@
         android:id="@+id/count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/hint"
+        android:layout_below="@+id/hint_popup"
         android:layout_centerHorizontal="true"
         app:layout_constraintBottom_toTopOf="@+id/addToCart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hint">
+        app:layout_constraintTop_toBottomOf="@+id/hint_popup">
 
         <ImageView
             android:id="@+id/decreaseBtn"

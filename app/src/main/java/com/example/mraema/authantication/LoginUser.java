@@ -1,5 +1,7 @@
 package com.example.mraema.authantication;
 
+import static com.example.mraema.MainActivity.sinhala;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -90,6 +92,8 @@ public class LoginUser extends AppCompatActivity {
                 startActivity(new Intent(LoginUser.this, RegisterUser.class));
             }
         });
+
+        setLanguage();
     }
 
 
@@ -150,6 +154,23 @@ public class LoginUser extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void setLanguage(){
+        if (sinhala == false){
+            et_email.setHint("Email");
+            et_password.setHint("Password");
+            tv_register.setText("Register");
+            tv_forget_pass.setText("Forgot Password");
+            btn_login.setText("Login to MRAEMA");
+
+        }else if (sinhala == true){
+            et_email.setHint("ඊමේල් ලිපිණය");
+            et_password.setHint("මුරපදය");
+            tv_register.setText("ලියාපදිංචි වන්න");
+            tv_forget_pass.setText("මුරපදය අමතකයි");
+            btn_login.setText("MRAEMA වෙත පිවිසෙන්න");
+        }
     }
 
 }

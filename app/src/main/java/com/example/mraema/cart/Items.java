@@ -6,15 +6,23 @@ public class Items {
     }
 
 
-    private String userName, itemName, pharmacyId,count, pharmacyName, unitPrice;
+    private String userName;
+    private String itemName;
+    private String pharmacyUserId;
+    private String count;
+    private String pharmacyName;
+    private String unitPrice;
+    private int totalPrice;
 
-    public Items(String userName, String itemName, String pharmacyName, String count, String pharmacyId, String unitPrice) {
+    public Items(String userName, String itemName, String pharmacyName, String count, String pharmacyUserId, String unitPrice, int totalPrice) {
         this.userName = userName;
         this.itemName = itemName;
-        this.pharmacyId = pharmacyId;
+        this.pharmacyUserId = pharmacyUserId;
         this.pharmacyName = pharmacyName;
         this.count = count;
         this.unitPrice = unitPrice;
+        this.totalPrice = totalPrice;
+
     }
 
 
@@ -34,12 +42,12 @@ public class Items {
         this.itemName = itemName;
     }
 
-    public String getPharmacyId() {
-        return pharmacyId;
+    public String getPharmacyUserId() {
+        return pharmacyUserId;
     }
 
-    public void setPharmacyId(String pharmacyId) {
-        this.pharmacyId = pharmacyId;
+    public void setPharmacyUserId(String pharmacyId) {
+        this.pharmacyUserId = pharmacyId;
     }
 
     public String getPharmacyName() {
@@ -65,5 +73,13 @@ public class Items {
 
     public void setUnitPrice(String unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

@@ -11,8 +11,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.mraema.MedicineReminder.MedicineActivity;
 import com.example.mraema.authantication.LoginUser;
 import com.example.mraema.pharmacy.PharmacyHome;
 import com.example.mraema.user.UserHome;
@@ -25,6 +27,7 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,17 +42,39 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
 
     private static final int REQUEST_LOCATION = 99;
     private Button pharmacy_btn,reminder;
+    public static boolean sinhala = false;
+    private Switch languadge;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FirebaseApp.initializeApp(this);
 
         reminder = findViewById(R.id.btn_reminder);
+        languadge = findViewById(R.id.chip4);
+
+
 
         pharmacy_btn = findViewById(R.id.btn_pharmacy);
+        
+        languadge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (languadge.isChecked()){
+                    sinhala = false;
+                    reminder.setText("Medicine Reminder");
+                    pharmacy_btn.setText("E-Pharmacy");
+                }else if(!languadge.isChecked()){
+                    sinhala = true;
+                    reminder.setText("ඖෂධ මතක් කිරීම.");
+                    pharmacy_btn.setText("ඖෂධ ඇණවුම් කිරීම.");
+                }
+            }
+        });
+
+
 
         getLocation();
 
@@ -71,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, UserHome.class));
+                startActivity(new Intent(MainActivity.this, MedicineActivity.class));
             }
         });
 

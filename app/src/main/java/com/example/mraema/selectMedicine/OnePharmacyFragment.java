@@ -1,5 +1,7 @@
 package com.example.mraema.selectMedicine;
 
+import static com.example.mraema.MainActivity.sinhala;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 
@@ -32,6 +34,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,11 +51,12 @@ public class OnePharmacyFragment extends Fragment {
     List<Items> pils;
     private Button directOrderButton, addToCart;
     private ImageView increaseBtn, decreaseBtn;
-    private TextView counter, popupTopic;
+    private TextView counter, popupTopic, instruction, pharmacyView,pillsCount;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private int count = 1;
-    private int total, unitPrice;
+    private int total;
+    private String unitPrice;
     private FirebaseUser user;
 
     public OnePharmacyFragment() {
@@ -72,6 +77,8 @@ public class OnePharmacyFragment extends Fragment {
         Log.d(TAG, "onCreateView: run");
 
         pilset = view.findViewById(R.id.medies);
+        instruction = view.findViewById(R.id.intruction);
+        pharmacyView = view.findViewById(R.id.fragmentTopic);
 
 
         directOrderButton = view.findViewById(R.id.direct_oder);
@@ -93,8 +100,10 @@ public class OnePharmacyFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 TextView text = view.findViewById(R.id.pName);
+                TextView pPrice = view.findViewById(R.id.pPrice);
 
                 String output = text.getText().toString();
+                unitPrice = pPrice.getText().toString();
                 Log.d(TAG, "onItemClick: "+output);
                 ItemPopup(output);
 
@@ -104,6 +113,11 @@ public class OnePharmacyFragment extends Fragment {
 
             }
         });
+
+        pharmacyView.setText(pharmacyName);
+
+        setLanguage();
+
         return view;
 
 
@@ -120,27 +134,34 @@ public class OnePharmacyFragment extends Fragment {
         pils = new ArrayList<>();
         pils.clear();
 
-
+        Log.d(TAG, "getMedicineList: "+id);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("medicines").document(id).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+            public void onEvent( DocumentSnapshot value, FirebaseFirestoreException error) {
 
-                Map<String, Object> medies = value.getData();
-                for (Map.Entry<String, Object> entry : medies.entrySet()) {
-                    Items items = new Items();
-                    Log.d(TAG, "onEvent: " + entry.getKey() + "  " + entry.getValue());
-                    items.setItemName((String)entry.getKey());
-                    items.setUnitPrice(entry.getValue().toString());
-                    //pils.add(unitName+" - " + unitPrice + "per item");
+                if (value !=null){
+                    Map<String, Object> medies = value.getData();
+                    for (Map.Entry<String, Object> entry : medies.entrySet()) {
+                        Items items = new Items();
+                        Log.d(TAG, "onEvent: " + entry.getKey() + "  " + entry.getValue());
+                        items.setItemName((String)entry.getKey());
+                        items.setUnitPrice(entry.getValue().toString());
+                        //pils.add(unitName+" - " + unitPrice + "per item");
 
-                    pils.add(items);
+                        pils.add(items);
 
+                    }
+                }else {
+                    Toast.makeText(getActivity(), "medicine store is empty", Toast.LENGTH_SHORT).show();
                 }
+
+
                 PillAdapter pv = new PillAdapter(getActivity(), R.layout.pil_item, pils);
 
                 pilset.setAdapter(pv);
                 pv.notifyDataSetChanged();
+
 
 
 
@@ -167,6 +188,14 @@ public class OnePharmacyFragment extends Fragment {
         decreaseBtn = view.findViewById(R.id.decreaseBtn);
         addToCart = view.findViewById(R.id.addToCart);
         popupTopic = view.findViewById(R.id.medicineName);
+        pillsCount   = view.findViewById(R.id.hint_popup);
+
+        if (sinhala == false){
+            pillsCount.setText("Set The Quantity");
+        }else if (sinhala == true){
+            pillsCount.setText("අවශ්\u200Dය ප්\u200Dරමානය ලබාදෙන්න.");
+        }
+
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -178,7 +207,7 @@ public class OnePharmacyFragment extends Fragment {
                 count++;
                 Log.d(TAG, "onClick: clicked");
                 counter.setText("" + count);
-                total = unitPrice*count;
+                total =Integer.parseInt(unitPrice)*count;
 
             }
         });
@@ -189,7 +218,7 @@ public class OnePharmacyFragment extends Fragment {
                 if (count >0){
                     count--;
                     counter.setText("" + count);
-                    total = unitPrice*count;
+                    total =Integer.parseInt(unitPrice)*count;
                 }
 
 
@@ -206,7 +235,7 @@ public class OnePharmacyFragment extends Fragment {
                 Map<String, Object> map = new HashMap<>();
                 map.put("pharmacyName", pharmacyName);
                 map.put("nedicineName",unitName);
-                map.put("pharmacyId",id);
+                map.put("pharmacyUserId",id);
                 map.put("units",count);
                 map.put("totalPricce",total);
 
@@ -255,5 +284,20 @@ public class OnePharmacyFragment extends Fragment {
 
         getMedicineList();
 
+
         }
+        public void setLanguage() {
+            if (sinhala == false) {
+                instruction.setText("Select medicines above to add cart, if not");
+                directOrderButton.setText("Order with prescription");
+            } else if (sinhala == true) {
+                instruction.setText("ඉහත ඇති ඖෂද තෝරා ඇනවුම් කරන්න.නැත්නම්");
+                directOrderButton.setText("තුන්ඩුව හරහා ඇනවුම් කරන්න.");
+            }
+        }
+
     }
+
+
+
+

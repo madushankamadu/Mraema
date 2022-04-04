@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ash">#B2BEB5</color>
+    <color name="colorPrimary">#2196f3</color>
     <integer-array name="progress_colors">
         <item>@color/purple_200</item>
         <item>@color/teal_200</item>

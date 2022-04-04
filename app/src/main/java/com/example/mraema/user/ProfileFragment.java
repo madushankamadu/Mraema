@@ -1,5 +1,8 @@
 package com.example.mraema.user;
 
+import static com.example.mraema.MainActivity.sinhala;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,10 +11,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mraema.R;
+import com.example.mraema.authantication.LoginUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +36,7 @@ public class ProfileFragment extends Fragment {
     private String userName, email, idNumber, contactNumber;
     private List<String> details;
     private ImageView buyHistory;
+    private Button logoutBtn;
 
 
     public ProfileFragment() {
@@ -49,6 +55,7 @@ public class ProfileFragment extends Fragment {
         idNumberTv = view.findViewById(R.id.id_number_tv);
         contactNumberTv = view.findViewById(R.id.contact_tv);
         buyHistory = view.findViewById(R.id.history_btn);
+        logoutBtn = view.findViewById(R.id.logout_btn);
 
         details = new ArrayList<>();
 
@@ -92,6 +99,27 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.signOut();
+                Intent intent = new Intent(getActivity(), LoginUser.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+        setLanguage();
         return view;
+    }
+
+    private void setLanguage(){
+        if (sinhala == false) {
+            logoutBtn.setText("Logout");
+        }else if (sinhala != true){
+            logoutBtn.setText("වරන්න");
+        }
     }
 }

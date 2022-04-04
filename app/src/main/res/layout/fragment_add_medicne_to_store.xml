@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pharmacy.AddMedicneToStoreFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".selectMedicine.OnePharmacyFragment"
+    android:background="@drawable/fragment_background"
+
+    android:outlineAmbientShadowColor="@color/black">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+
+    <EditText
+        android:id="@+id/pill_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="medicine name"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"/>
+
+    <EditText
+        android:id="@+id/pill_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="medicine price"
+        android:textSize="20sp"
+        android:layout_below="@+id/pill_name"/>
+
+    <EditText
+        android:id="@+id/pill_unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="unit type"
+        android:textSize="20sp"
+        android:layout_below="@+id/pill_price"/>
+
+    <Button
+        android:id="@+id/add_pills_to_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add To Store"
+        android:layout_below="@+id/pill_unit"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_medies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_pills_to_store"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/search_background"
+        app:queryHint="බෙහෙත් හොයන්න." />
+
+
+</RelativeLayout>

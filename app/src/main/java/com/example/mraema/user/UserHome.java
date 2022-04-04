@@ -4,10 +4,13 @@ import static com.example.mraema.user.distanceSetter.getKmFromLatLong;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -18,9 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,6 +48,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,7 +86,7 @@ public class UserHome extends AppCompatActivity {
             }
 
             distanceToUser.clear();
-            Log.d(TAG, "onLocationResult: databaseAccessed");
+         //   Log.d(TAG, "onLocationResult: databaseAccessed");
             databaseRef();
         }
     };// end of locationcallback
@@ -101,7 +108,7 @@ public class UserHome extends AppCompatActivity {
 
        // Bundle user = getIntent().getExtras();
         FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
-        Log.d(TAG, "onCreate: user is  "  + user1.getUid());
+      //  Log.d(TAG, "onCreate: user is  "  + user1.getUid());
 
 
 
@@ -114,6 +121,7 @@ public class UserHome extends AppCompatActivity {
 
 
     }// onCreate method closed
+
 
 
 
@@ -143,7 +151,8 @@ public class UserHome extends AppCompatActivity {
                              apharmacy.distance= getKmFromLatLong(lat1,lng1,lat2,lng2);
                              apharmacy.name = ds.child("PharmacyName").getValue().toString();
                              apharmacy.town = ds.child("Town").getValue().toString();
-                             apharmacy.id = ds.child("regNumber").getValue().toString();
+                             apharmacy.id = ds.getKey();
+                      //      Log.d(TAG, "onSuccess: "+ds.getKey());
 
                             distanceToUser.add(apharmacy);//
                             Collections.sort(distanceToUser);//sort distances
@@ -206,7 +215,9 @@ public class UserHome extends AppCompatActivity {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 auth.signOut();
                 Intent intent = new Intent(UserHome.this, LoginUser.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                UserHome.this.finish();
 
                 break;
             case R.id.cart:
@@ -240,6 +251,7 @@ public class UserHome extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
         //    getLastLocation();
            // Log.d(TAG, "onStart: started");
@@ -256,6 +268,7 @@ public class UserHome extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         stopLocationUpdates();
+
     }//onStop method Stoped
 
     //after  geting the permission

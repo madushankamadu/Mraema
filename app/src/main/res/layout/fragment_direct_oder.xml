@@ -16,8 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
-        android:textSize="15dp"
-        android:text="!ඔබේ තුන්ඩුව ඉදිරිපත් කර ඖෂද ඇනවුම් කරන්න.!" />
+        android:text="ඔබේ තුන්ඩුව ඉදිරිපත් කර ඖෂද ඇනවුම් කරන්න!"
+        android:textSize="15dp" />
 
     <Button
         android:id="@+id/upload_presc"
@@ -49,6 +49,7 @@
 
 
     <Button
+        android:id="@+id/make_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/msg"
